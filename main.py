@@ -28,11 +28,11 @@ MDScreen:
                 halign: 'center'
 
                 FitImage:
-                    source: "image python//greenhouseicon.png"  
+                    source: "image python//greenhouse.png"  
                     x:350
                     y:360
                     halign: 'center'    
-                    size: "100dp", "100dp"
+                    size: "110dp", "110dp"
                     
             MDFillRoundFlatIconButton:
                 icon: "image python//icons8-temperature-inside-64.png"
