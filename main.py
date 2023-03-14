@@ -4,7 +4,6 @@ from kivy.properties import StringProperty
 
 
 class GreenHouse(MDApp):
-    state = StringProperty("start")
     def build(self):
         self.theme_cls.material_style = "M2"
         self.theme_cls.theme_style = "Dark"
