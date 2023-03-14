@@ -13,22 +13,32 @@ MDScreen:
     
     MDBottomNavigation:
         #panel_color: "#eeeaea"
-        selected_color_background: "blue"
+        selected_color_background: "darkblue"
         text_color_active: "lightgrey"
 
         MDBottomNavigationItem:
             name: 'Home'
             text: 'Home'
             icon: 'image python//icons8-home-64.png'
-            md_bg_color: app.theme_cls.primary_light
+            rgb: 75,74,74
+            
             
             MDLabel:
                 text: 'Home'
                 halign: 'center'
+
+                FitImage:
+                    source: "image python//greenhouseicon.png"  
+                    x:350
+                    y:360
+                    halign: 'center'    
+                    size: "100dp", "100dp"
+                    
             MDFillRoundFlatIconButton:
                 icon: "image python//icons8-temperature-inside-64.png"
                 text: "Heater"
                 pos_hint: {"center_x": .5, "center_y": .5}
+                
             MDFillRoundFlatIconButton:
                 icon: "image python//external-Cooler-propeller-others-inmotus-design-15.png"
                 text: "Cooler"
@@ -68,11 +78,13 @@ MDScreen:
             name: 'Feedback'
             text: 'Feedback'
             icon: 'image python//icons8-comments-64.png'
-            md_bg_color: app.theme_cls.primary_light
+            md_bg_color: 'grey'
 
             MDLabel:
                 text: 'Feedback'
                 halign: 'center'
+                
+
     
 '''
         )
