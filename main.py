@@ -1,6 +1,6 @@
 from kivy.lang import Builder
 from kivymd.app import MDApp
-from kivy.properties import StringProperty
+
 
 
 class GreenHouse(MDApp):

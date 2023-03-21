@@ -52,7 +52,7 @@ MDScreen:
             name: 'Value'
             text: 'Value'
             icon: 'image python//icon_value.png'
-            md_bg_color: app.theme_cls.primary_light
+            rgb: 75,74,74
 
 
             MDLabel:
@@ -63,18 +63,26 @@ MDScreen:
             name: 'Help'
             text: 'help'
             icon: 'image python//help-icon-3.png'
-            md_bg_color: app.theme_cls.primary_light
+            rgb: 75,74,74
+            MDBoxLayout:
+                orientation: "vertical"
+
+                MDTopAppBar:
+                    title: "HELP"
+
+                ScrollView:
+
+                    MDList:
+                        id: box
+                        MDLabel:
 
 
-            MDLabel:
-                text: 'Help'
-                halign: 'center'
 
         MDBottomNavigationItem:
             name: 'Feedback'
             text: 'Feedback'
             icon: 'image python//icons8-comments-64.png'
-            md_bg_color: 'grey'
+            rgb: 75,74,74
 
             MDLabel:
                 text: 'Feedback'
