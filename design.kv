@@ -55,9 +55,14 @@ MDScreen:
             rgb: 75,74,74
 
 
-            MDLabel:
-                text: 'Value'
-                halign: 'center'
+
+            MDBoxLayout:
+                orientation: "vertical"
+                MDTopAppBar:
+                    title: "VALUE"
+                ScrollView:
+
+
 
         MDBottomNavigationItem:
             name: 'Help'
@@ -72,9 +77,14 @@ MDScreen:
 
                 ScrollView:
 
-                    MDList:
-                        id: box
-                        MDLabel:
+                    MDLabel:
+                        text: "•None-button responsible for changing the modes of the greenhouse               •Heater-button responsible for turning the heater on and off                                     •Cooler-button responsible forturning the ventilation system on and off                        •Water-button responsible for turning on and off necessary water for plant life                                           •Ozon-button responsible forsaturation oxygen with ozone                                   •System-button responsible for changing the theme                                                               •%-button responsible for changing the project scale "
+                        font_size: '20sp'
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        halign: 'center'
+
+
 
 
 
@@ -84,7 +94,19 @@ MDScreen:
             icon: 'image python//icons8-comments-64.png'
             rgb: 75,74,74
 
-            MDLabel:
-                text: 'Feedback'
-                halign: 'center'
+            MDBoxLayout:
+                orientation: "vertical"
+
+                MDTopAppBar:
+                    title: "FEEDBACK"
+
+                ScrollView:
+
+                    MDLabel:
+                        text: "©To contact SPARTA                                                                                            sparta.info2023@gmail.com                                    +37499918631/+37494793697/+37477114429                                                                    Yerevan, Armenia, Mamikoniants 52,                                                                                  Yerevan state college of Informatics"
+                        font_size: '25sp'
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        halign: 'center'
+
 
