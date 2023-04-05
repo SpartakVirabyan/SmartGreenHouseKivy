@@ -1,61 +1,37 @@
-from kivy.uix.button import Button
-from kivy.uix.widget import Widget
-from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
-from kivy.app import App
-from kivy.graphics import Color, Rectangle
-from random import random as r
-from functools import partial
+from kivy import Config
+from kivy.lang import Builder
+from kivymd.app import MDApp
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+Config.set('graphics', 'width', '400')
+Config.set('graphics', 'height', '650')
 
-
-class StressCanvasApp(App):
-
-    def add_rects(self, label, wid, count, *largs):
-        label.text = str(int(label.text) + count)
-        with wid.canvas:
-            for x in range(count):
-                Color(r(), 1, 1, mode='hsv')
-                Rectangle(pos=(r() * wid.width + wid.x,
-                               r() * wid.height + wid.y), size=(20, 20))
-
-    def double_rects(self, label, wid, *largs):
-        count = int(label.text)
-        self.add_rects(label, wid, count, *largs)
-
-    def reset_rects(self, label, wid, *largs):
-        label.text = '0'
-        wid.canvas.clear()
-
+class MainApp(MDApp):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.cred = credentials.Certificate('smartgreenhouse-a7809-firebase-adminsdk-ltfsz-6e6855dac0.json')
+        # Initialize the app with a service account, granting admin privileges
+        firebase_admin.initialize_app(self.cred, {
+            'databaseURL': 'https://smartgreenhouse-a7809-default-rtdb.firebaseio.com/'
+        })
+        # Set default
+        self.ref = db.reference('/')
     def build(self):
-        wid = Widget()
+        self.title = "GreenHouse"
+        self.theme_cls.theme_style = "Light"
+        self.theme_cls.primary_palette = "LightBlue"
+        return Builder.load_file('design.kv')
 
-        label = Label(text='0')
+    def set(self, part, bool):
+        ref = db.reference('/')
+        ref.update({part: bool})
 
-        btn_add100 = Button(text='+ 100 rects',
-                            on_press=partial(self.add_rects, label, wid, 100))
-
-        btn_add500 = Button(text='+ 500 rects',
-                            on_press=partial(self.add_rects, label, wid, 500))
-
-        btn_double = Button(text='x 2',
-                            on_press=partial(self.double_rects, label, wid))
-
-        btn_reset = Button(text='Reset',
-                           on_press=partial(self.reset_rects, label, wid))
-
-        layout = BoxLayout(size_hint=(1, None), height=50)
-        layout.add_widget(btn_add100)
-        layout.add_widget(btn_add500)
-        layout.add_widget(btn_double)
-        layout.add_widget(btn_reset)
-        layout.add_widget(label)
-
-        root = BoxLayout(orientation='vertical')
-        root.add_widget(wid)
-        root.add_widget(layout)
-
-        return root
-
-
-if __name__ == '__main__':
-    StressCanvasApp().run()
+    # main buttons command
+    def button(self, function):
+        ref = db.reference('/')
+        if ref.get()[function]:
+            self.set(function, False)
+        else:
+            self.set(function, True)
+MainApp().run()
