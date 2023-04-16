@@ -3,8 +3,10 @@ Screen:
         orientation: 'vertical'
 
         MDTopAppBar:
+            id: toolbar
             title: "GreenHouse"
             elevation: 4
+            left_action_items: [["menu", lambda x: app.dropdown.open()]]
 
         MDBottomNavigation:
             panel_color: .1,.182,.244,.255
@@ -17,13 +19,6 @@ Screen:
                 Image:
                     source: 'image python//93z_2206_w009_n001_145b_p14_145.jpg'
                     pos_hint: {'center_y':0.8}
-                MDRaisedButton:
-                    id: button
-                    text: "Choose plant"
-                    pos_hint: {"center_x": 0.5, "center_y": 0.53}
-                    on_release: app.menu.open()
-                    md_bg_color: app.theme_cls.primary_dark
-                    text_color: "white"
 
                 MDBoxLayout:
                     orientation: "vertical"
@@ -39,8 +34,6 @@ Screen:
                         text: "Heating"
                         pos_hint: {"center_x":.5}
                         on_press: app.button("Heating")
-
-
 
                     MDRectangleFlatIconButton:
                         md_bg_color: app.theme_cls.primary_dark

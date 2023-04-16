@@ -1,5 +1,7 @@
 from kivy import Config
+from kivy.clock import Clock
 from kivy.lang import Builder
+from kivy.properties import StringProperty
 from kivymd.app import MDApp
 import firebase_admin
 from firebase_admin import credentials
@@ -22,25 +24,18 @@ class MainApp(MDApp):
         self.ref = db.reference('/')
         for i in self.plants.get():
             self.array.append(i)
-        self.temperature = db.reference('/Temperature').get()
-        self.humidity = db.reference('/Humidity').get()
-        self.soil = db.reference('/Soil humidity').get()
+
         self.screen =  Builder.load_file('design.kv')
         menu_items = [
             {
-                "text": f"Item {i}",
+                "text": f"{i}",
                 "viewclass": "OneLineListItem",
-                "on_release": lambda x=f"Item {i}": self.menu_callback(x),
-            } for i in range(5)
+                "on_release": lambda x=f"{i}": self.menu_callback(x),
+            } for i in self.array
         ]
-        self.menu = MDDropdownMenu(
-            caller=self.screen.ids.button,
-            items=menu_items,
-            width_mult=4,
-        )
-        self.screen.ids["temperature"].text = str(self.temperature)
-        self.screen.ids["humidity"].text = str(self.humidity)
-        self.screen.ids["soil"].text = str(self.soil)
+        self.dropdown = MDDropdownMenu(caller=self.screen.ids.toolbar.ids.left_actions,items=menu_items,
+            width_mult=4,)
+
 
     def menu_callback(self, text_item):
         print(text_item)
@@ -49,8 +44,13 @@ class MainApp(MDApp):
         self.title = "GreenHouse"
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "LightBlue"
+        Clock.schedule_interval(lambda dt: self.update_data(), 1)
         return self.screen
 
+    def update_data(self):
+        self.screen.ids["temperature"].text = str(db.reference('/Temperature').get())
+        self.screen.ids["humidity"].text = str(db.reference('/Humidity').get())
+        self.screen.ids["soil"].text = str(db.reference('/Soil humidity').get())
     def set(self, part, bool):
         ref = db.reference('/')
         ref.update({part: bool})
@@ -62,4 +62,6 @@ class MainApp(MDApp):
             self.set(function, False)
         else:
             self.set(function, True)
-MainApp().run()
+
+app = MainApp()
+app.run()
