@@ -36,9 +36,27 @@ class MainApp(MDApp):
         self.dropdown = MDDropdownMenu(caller=self.screen.ids.toolbar.ids.left_actions,items=menu_items,
             width_mult=4,)
 
-
-    def menu_callback(self, text_item):
-        print(text_item)
+    def menu_callback(self, new_scaling: str):
+        if self.plants.child(new_scaling).get()["Temperature"] > db.reference('/Temperature').get():
+            self.set("Heating", True)
+            if self.plants.child(new_scaling).get()["Temperature"] == db.reference('/Temperature').get():
+                self.set("Heating", False)
+        else:
+            self.set("Cooling", True)
+            if self.plants.child(new_scaling).get()["Temperature"] == db.reference('/Temperature').get():
+                self.set("Cooling", False)
+        if self.plants.child(new_scaling).get()["Humidity"] < db.reference('/Humidity').get():
+            self.set("Ozon", True)
+            if self.plants.child(new_scaling).get()["Humidity"] == db.reference('/Humidity').get():
+                self.set("Cooling", False)
+        else:
+            self.set("Ozon", False)
+        if self.plants.child(new_scaling).get()["Soil humidity"] < db.reference('/Soil humidity').get():
+            self.set("Water", True)
+            if self.plants.child(new_scaling).get()["Soil humidity"] == db.reference('/Soil humidity').get():
+                self.set("Water", False)
+        else:
+            self.set("Water", False)
 
     def build(self):
         self.title = "GreenHouse"
