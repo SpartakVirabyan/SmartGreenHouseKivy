@@ -57,6 +57,13 @@ class MainApp(MDApp):
                 self.set("Water", False)
         else:
             self.set("Water", False)
+        if self.plants.child(new_scaling).get()["Temperature"] == db.reference('/Temperature').get():
+            self.set("Heating", False)
+            self.set("Cooling", False)
+        if self.plants.child(new_scaling).get()["Soil humidity"] == db.reference('/Soil humidity').get():
+            self.set("Water", False)
+        if self.plants.child(new_scaling).get()["Humidity"] == db.reference('/Humidity').get():
+            self.set("Cooling", False)
 
     def build(self):
         self.title = "GreenHouse"
