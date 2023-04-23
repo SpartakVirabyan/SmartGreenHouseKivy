@@ -1,5 +1,4 @@
 import threading
-
 from kivy import Config
 from kivy.clock import Clock
 from kivy.lang import Builder
@@ -26,22 +25,34 @@ class MainApp(MDApp):
 
     def menu_callback(self, plant: str):
         if not plant == "None":
-            service.auto_set(plant)
-        else:pass
+            threading.Thread(target=service.auto_set(plant)).start()
+            self.dropdown.dismiss()
+        else:
+            threading.Thread(target=service.set_default()).start()
+            self.dropdown.dismiss()
 
     def button(self,key):
-        service.button(key)
+        threading.Thread(target=service.button(key)).start()
+        threading.Thread(target=self.set_background(key,service.get_ref(key).get())).start()
+
     def build(self):
         self.title = "GreenHouse"
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "LightBlue"
-        Clock.schedule_interval(lambda dt: self.update_data(), 1)
+        threading.Thread(target=Clock.schedule_interval(lambda dt: self.update_data(), 1)).start()
         return self.screen
 
     def update_data(self):
-        self.screen.ids["temperature"].text = str(service.get_temp())
-        self.screen.ids["humidity"].text = str(service.get_hum())
-        self.screen.ids["soil"].text = str(service.get_soil())
+        threading.Thread(target=self.set_text("temperature",str(service.get_temp()))).start()
+        threading.Thread(target=self.set_text("humidity", str(service.get_hum()))).start()
+        threading.Thread(target=self.set_text("soil", str(service.get_soil()))).start()
+    def set_background(self,id,bool):
+        if bool:
+            self.screen.ids[id].md_bg_color = self.theme_cls.primary_light
+        else:
+            self.screen.ids[id].md_bg_color = self.theme_cls.primary_dark
+    def set_text(self,id,func:str):
+        self.screen.ids[id].text = func
 
 app = MainApp()
-app.run()
+threading.Thread(target=app.run()).start()

@@ -39,16 +39,26 @@ def button(function):
     else:
         threading.Thread(target=set_fb(function, True)).start()
 
+
+
 def add_array():
     for i in plants.get():
         threading.Thread(target=array.append(i)).start()
 
 
-def auto_set(plant):
-    threading.Thread(target=set_fb("Heating", plants.child(plant).get()["Temperature"] > db.reference('/Temperature').get())).start()
-    threading.Thread(target=set_fb("Cooling", plants.child(plant).get()["Temperature"] < db.reference('/Temperature').get())).start()
-    threading.Thread(target=set_fb("Ozon", plants.child(plant).get()["Humidity"] < db.reference('/Humidity').get())).start()
-    threading.Thread(target=set_fb("Water", plants.child(plant).get()["Soil humidity"] < db.reference('/Soil humidity').get())).start()
+def auto_set(new_scaling):
+    threading.Thread(target=set_fb("Heating",plants.child(new_scaling).get()["Temperature"] > db.reference('/Temperature').get())).start()
+    threading.Thread(target=set_fb("Cooling", plants.child(new_scaling).get()["Temperature"] > db.reference('/Temperature').get())).start()
+    threading.Thread(target=set_fb("Ozon", plants.child(new_scaling).get()["Humidity"] > db.reference('/Humidity').get())).start()
+    threading.Thread(target=set_fb("Water",plants.child(new_scaling).get()["Soil humidity"] > db.reference('/Soil humidity').get())).start()
+
+
+def set_default():
+    threading.Thread(target=set_fb('Heating',False)).start()
+    threading.Thread(target=set_fb('Cooling', False)).start()
+    threading.Thread(target=set_fb('Water', False)).start()
+    threading.Thread(target=set_fb('Ozon', False)).start()
+
 
 
 

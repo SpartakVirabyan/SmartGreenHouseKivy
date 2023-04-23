@@ -28,14 +28,16 @@ Screen:
 
 
                     MDRectangleFlatIconButton:
-                        md_bg_color: app.theme_cls.primary_dark
+                        id: Heating
                         text_color: "white"
+                        md_bg_color: app.theme_cls.primary_dark
                         icon: 'image python//icons8-temperature-inside-64.png'
                         text: "Heating"
                         pos_hint: {"center_x":.5}
                         on_press: app.button("Heating")
 
                     MDRectangleFlatIconButton:
+                        id: Cooling
                         md_bg_color: app.theme_cls.primary_dark
                         text_color: "white"
                         icon: 'image python//external-Cooler-propeller-others-inmotus-design-15.png'
@@ -45,6 +47,7 @@ Screen:
 
 
                     MDRectangleFlatIconButton:
+                        id: Water
                         md_bg_color: app.theme_cls.primary_dark
                         text_color: "white"
                         icon: 'image python//icons8-thirst-50.png'
@@ -54,6 +57,7 @@ Screen:
 
 
                     MDRectangleFlatIconButton:
+                        id: Ozon
                         md_bg_color: app.theme_cls.primary_dark
                         text_color: "white"
                         icon: 'image python//icons8-ozone-structure-64.png'
