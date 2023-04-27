@@ -1,12 +1,11 @@
 import threading
-from kivy import Config
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.menu import MDDropdownMenu
 import service
-Config.set('graphics', 'width', '400')
-Config.set('graphics', 'height', '650')
+from kivy.core.window import Window
+Window.size = (350, 600)
 
 class MainApp(MDApp):
     def __init__(self, **kwargs):
