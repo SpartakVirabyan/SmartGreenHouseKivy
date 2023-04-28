@@ -26,6 +26,7 @@ class MainApp(MDApp):
         if not plant == "None":
             threading.Thread(target=service.auto_set(plant)).start()
             self.dropdown.dismiss()
+            threading.Thread(target=Clock.schedule_interval(lambda dt: service.auto_set(plant), 1)).start()
         else:
             threading.Thread(target=service.set_default()).start()
             self.dropdown.dismiss()
