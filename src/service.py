@@ -48,7 +48,7 @@ def add_array():
 
 def auto_set(new_scaling):
     threading.Thread(target=set_fb("Heating",plants.child(new_scaling).get()["Temperature"] > db.reference('/Temperature').get())).start()
-    threading.Thread(target=set_fb("Cooling", plants.child(new_scaling).get()["Temperature"] > db.reference('/Temperature').get())).start()
+    threading.Thread(target=set_fb("Cooling", plants.child(new_scaling).get()["Temperature"] < db.reference('/Temperature').get())).start()
     threading.Thread(target=set_fb("Ozon", plants.child(new_scaling).get()["Humidity"] > db.reference('/Humidity').get())).start()
     threading.Thread(target=set_fb("Water",plants.child(new_scaling).get()["Soil humidity"] > db.reference('/Soil humidity').get())).start()
 
