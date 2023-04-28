@@ -42,8 +42,8 @@ class MainApp(MDApp):
         return self.screen
 
     def update_data(self):
-        threading.Thread(target=self.set_text("temperature",str(service.get_temp()))).start()
-        threading.Thread(target=self.set_text("humidity", str(service.get_hum()))).start()
+        threading.Thread(target=self.set_text("temperature",str(service.get_temp())+"°C")).start()
+        threading.Thread(target=self.set_text("humidity", str(service.get_hum())+"%")).start()
         threading.Thread(target=self.set_text("soil", str(service.get_soil()))).start()
     def set_background(self,id,bool):
         if bool:
